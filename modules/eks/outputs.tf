@@ -12,3 +12,8 @@ output "cluster_version" {
   description = "Kubernetes version"
   value       = aws_eks_cluster.this.version
 }
+
+output "kubeconfig_command" {
+  description = "Command to update kubeconfig"
+  value       = "aws eks update-kubeconfig --region ${var.aws_region} --name ${aws_eks_cluster.this.name}"
+}

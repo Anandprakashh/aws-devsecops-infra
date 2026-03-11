@@ -19,5 +19,7 @@ module "eks" {
   public_subnet_ids   = module.vpc.public_subnet_ids
   cluster_version     = "1.35"
   cluster_name        = "dev"
+  eks_cluster_sg_name  = "dev-cluster-sg"
+  aws_region           = "eu-west-1"
 }
 

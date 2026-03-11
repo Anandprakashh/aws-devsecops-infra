@@ -29,3 +29,12 @@ variable "cluster_name" {
   type        = string
 }
 
+variable "eks_cluster_sg_name" {
+  description = "Name for EKS cluster security group"
+  type        = string
+}
+
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+}

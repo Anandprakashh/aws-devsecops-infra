@@ -25,13 +25,29 @@ resource "aws_eks_cluster" "this" {
 
   vpc_config {
     subnet_ids              = var.private_subnet_ids
-    security_group_ids      = []  # we'll add this later
+    security_group_ids      = [ aws_security_group.cluster.id ]
     endpoint_private_access = true
     endpoint_public_access  = true
     public_access_cidrs     = ["0.0.0.0/0"]
   }
 
   depends_on = [aws_iam_role_policy_attachment.eks_cluster_policy]
+}
+
+resource "aws_security_group" "cluster" {
+  name_prefix = var.eks_cluster_sg_name
+  vpc_id      = var.vpc_id
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.name}-eks-cluster-sg"
+  }
 }
 
 resource "aws_iam_role" "eks_nodes" {
